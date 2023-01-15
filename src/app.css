@@ -1,8 +1,8 @@
-.daylight{
+.daylight {
   background: #fcf5e0;
   font-family: "Courier New", Courier, monospace;
 }
-.dark{
+.dark {
   background: black;
   color: white;
 }
@@ -20,7 +20,8 @@ h1 {
   padding: 20px;
   border-radius: 12px;
   background: #ffd82c;
-  color:#4a391c ;
+  color: #4a391c;
+  display: block;
 }
 .latest-update {
   margin-top: 0;
@@ -30,24 +31,23 @@ h1 {
 .current-icon {
   width: 90px;
 }
-.forecast-icon{
+.forecast-icon {
   width: 50px;
 }
-.weather-forecast-date{
+.weather-forecast-date {
   font-weight: 600;
   opacity: 60%;
 }
-form{
- 
+form {
   margin-left: 100px;
 }
-.current-temp{
+.current-temp {
   font-size: 70px;
   position: relative;
   bottom: -20px;
   left: -50px;
 }
-#metric{
+#metric {
   position: relative;
   right: -40px;
   top: -70px;
@@ -67,18 +67,23 @@ form{
   border-radius: 5px;
   transform: scale(1.1);
 }
-.warm{
-  background:#fcffcd;
+.warm {
+  background: #fcffcd;
 }
-.cold{
+.cold {
   background: #e9f6f6;
 }
-.description::first-letter{
+.description::first-letter {
   text-transform: capitalize;
 }
-small{
+small {
   max-width: 600px;
   margin-left: 30px;
   margin-top: 0;
   padding: 0;
+}
+.container {
+  max-width: 600px;
+  margin-left: 310px;
+  margin-right: 310px;
 }
