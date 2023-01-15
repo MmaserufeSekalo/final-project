@@ -30,17 +30,18 @@
               autocomplete="off"
               autofocus="on"
               class="form-control-sm"
+              id="search-input"
             />
             <input
               type="submit"
               value="Search"
-              id="search-input"
+              id="search-submit"
               class="btn btn-primary btn-sm"
             />
             <input
               type="submit"
               value="current"
-              id="current-location"
+              id="current-location-button"
               class="btn btn-success btn-sm"
             />
           </form>
@@ -57,38 +58,42 @@
             <div class="time" id="time">18:20</div>
             <div class="description" id="description">Sunny</div>
           </div>
-          <div class="row">
-            <div class="col-2">
-                <br>
-              <img
-                src="https://ssl.gstatic.com/onebox/weather/48/sunny.png"
-                alt="" class="current-icon" id="current-icon"
-              />
-            </div>
-            <div class="col-6">
-              <div class="current-temp">30</div>
-
-              <div class="units">
-                <span class="metric" id="metric">°C |</span>
-                <span class="imperial" id="imperial">°F</span>
+          <div class="current-weather">
+            <div class="row">
+              <div class="col">
+                <br />
+                <img
+                  src="https://ssl.gstatic.com/onebox/weather/48/sunny.png"
+                  alt=""
+                  class="current-icon"
+                  id="current-icon"
+                />
               </div>
-            </div>
-            <div class="col-4">
-              <div class="section3">
-                <div class="humidity">
-                    <br>
-                    <br>
-                  Humidity <span id="humidity">40</span> <span>%</span>
+              <div class="col">
+                <div class="current-temp" id="current-temp">30</div>
+
+                <div class="units">
+                  <span class="metric" id="metric"><a href="#">°C </a> |</span>
+                  <span class="imperial" id="imperial"><a href="#">°F</a> </span>
                 </div>
-                <div class="wind">
-                  Wind <span id="wind-speed">3</span><span>Km/H</span>
+              </div>
+              <div class="col">
+                <div class="section3">
+                  <div class="humidity">
+                    <br />
+                    <br />
+                    Humidity <span id="humidity">40</span> <span>%</span>
+                  </div>
+                  <div class="wind">
+                    Wind <span id="wind-speed">3</span><span>Km/H</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="weather-forecast">
-            sadfghjklzxcvbnm,wertyuio
+          
         </div>
       </div>
       <div class="footer">
