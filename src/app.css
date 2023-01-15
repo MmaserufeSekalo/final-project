@@ -1,6 +1,10 @@
-body {
-  background: #eb5033;
+.daylight{
+  background: #fcf5e0;
   font-family: "Courier New", Courier, monospace;
+}
+.dark{
+  background: black;
+  color: white;
 }
 h1 {
   font-weight: 600;
@@ -10,12 +14,13 @@ h1 {
   margin-bottom: 0;
 }
 .app-wrapper {
-  max-width: 800px;
+  max-width: 600px;
   border: 2px solid rgb(61, 61, 89);
   margin: 30px;
   padding: 20px;
   border-radius: 12px;
   background: #ffd82c;
+  color:#4a391c ;
 }
 .latest-update {
   margin-top: 0;
@@ -23,17 +28,57 @@ h1 {
   font-size: 15px;
 }
 .current-icon {
-  width: 70px;
+  width: 90px;
 }
-
+.forecast-icon{
+  width: 50px;
+}
+.weather-forecast-date{
+  font-weight: 600;
+  opacity: 60%;
+}
+form{
+ 
+  margin-left: 100px;
+}
+.current-temp{
+  font-size: 70px;
+  position: relative;
+  bottom: -20px;
+  left: -50px;
+}
+#metric{
+  position: relative;
+  right: -40px;
+  top: -70px;
+}
 .section3 {
   font-size: 15px;
+  position: relative;
+  top: -30px;
 }
 .weather-forecast {
   padding: 3px;
 
   transition: all 2ms ease-in;
 }
-.weather-forecast:hover {
-  background: #ff9d00;
+.col-2:hover {
+  background: #b0aaa06b;
+  border-radius: 5px;
+  transform: scale(1.1);
+}
+.warm{
+  background:#fcffcd;
+}
+.cold{
+  background: #e9f6f6;
+}
+.description::first-letter{
+  text-transform: capitalize;
+}
+small{
+  max-width: 600px;
+  margin-left: 30px;
+  margin-top: 0;
+  padding: 0;
 }
