@@ -24,34 +24,41 @@ let timeElement = document.querySelector("#time");
 dayElement.innerHTML = day;
 timeElement.innerHTML = hour + ":" + minutes;
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+
 
 function displayForecast(response) {
-  console.log(response);
+  console.log(response.data.daily[0]);
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector(".weather-forecast");
 
   let forecastHTML = `<div class ="row">`;
-  let days = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-  ];
-  days.forEach(function (day) {
+  
+  let futureData =
+  forecast.forEach(function (forecastDay,index) {
+    if (index < 4) {
     forecastHTML =
       forecastHTML +
       ` <div class="col-2"> 
-        	<div class="weather-forecast-date">${day}</div>
+        	<div class="weather-forecast-date">${formatDay(forecastDay.time)}</div>
 		<img
-                  src="https://ssl.gstatic.com/onebox/weather/48/sunny_s_cloudy.png"
-                  alt=""
+                  src="${forecastDay.condition.icon_url}"
+                  alt="${forecastDay.condition.description}"
                   class="forecast-icon "/>
               	<div class = "weather-forecast-temperatures">
-                	<span class="max">18°</span> <span class="min"> 8°</span>
+                	<span class="max">${Math.round(
+                    forecastDay.temperature.maximum
+                  )}°</span> <span class=min> ${Math.round(
+        forecastDay.temperature.minimum
+      )}°</span>
                 </div>          
-	</div>`;
+	</div>`;}
     // forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
   });
@@ -59,10 +66,8 @@ function displayForecast(response) {
 }
 
 function currentWeather(response) {
-
-
   celsiusTemp = Math.round(response.data.temperature.current);
- let  cityName = response.data.city;
+  let cityName = response.data.city;
   let iconElement = document.querySelector("#current-icon");
   let descriptionElement = document.querySelector("#description");
   let windElement = document.querySelector("#wind-speed");
@@ -77,10 +82,9 @@ function currentWeather(response) {
   iconElement.setAttribute("src", response.data.condition.icon_url);
   iconElement.setAttribute("alt", response.data.condition.icon);
 
-
-let forecastCity = cityName;
-let forecastUrl = `https://api.shecodes.io/weather/v1/forecast?query=${forecastCity}&key=${apiKey}$units=metric`;
-axios.get(forecastUrl).then(displayForecast);
+  let forecastCity = cityName;
+  let forecastUrl = `https://api.shecodes.io/weather/v1/forecast?query=${forecastCity}&key=${apiKey}&units=metric`;
+  axios.get(forecastUrl).then(displayForecast);
 }
 let celsiusTemp = null;
 
@@ -88,8 +92,6 @@ let city = "Polokwane";
 let apiKey = "b4b16ao0bed60a37cdt0a5dcdf865c3b";
 let currentUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
 axios.get(currentUrl).then(currentWeather);
-
-
 
 function fahrenheitTemp(event) {
   event.preventDefault();
