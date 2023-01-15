@@ -1,28 +1,54 @@
-let now = new Date();
-let hour = now.getHours();
-if (hour < 10) {
-  hour = "0" + hour;
+function timeNow(response) {
+  console.log(response.data.sys);
+  console.log(response.data.sys.sunset);
+  let now = new Date(response.data.dt * 1000);
+  let hour = now.getHours();
+  if (hour < 10) {
+    hour = "0" + hour;
+  }
+
+  let minutes = now.getMinutes();
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  let day = days[now.getDay()];
+  let dayElement = document.querySelector("#day");
+  let timeElement = document.querySelector("#time");
+  dayElement.innerHTML = day;
+  timeElement.innerHTML = hour + ":" + minutes;
+  let timeAM = response.data.dt;
+  let sunset = response.data.sys.sunset;
+  let surise = response.data.sys.sunrise;
+  let dusk = document.querySelector("body");
+  if (timeAM >sunset) {
+    dusk.classList.add("dark");
+  }
+  else{
+    dusk.classList.add("day")
+  }
 }
 
-let minutes = now.getMinutes();
-if (minutes < 10) {
-  minutes = "0" + minutes;
+function light(hour) {
+  let dayTime = hour;
+  if (dayTime > 18) {
+    let bodyClass = document.querySelector("body");
+    bodyClass.classList.add("night");
+  } else {
+    let bodyClass = document.querySelector("body");
+    bodyClass.classList.add("daylight");
+  }
 }
-
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-let day = days[now.getDay()];
-let dayElement = document.querySelector("#day");
-let timeElement = document.querySelector("#time");
-dayElement.innerHTML = day;
-timeElement.innerHTML = hour + ":" + minutes;
 
 function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
@@ -32,33 +58,31 @@ function formatDay(timestamp) {
   return days[day];
 }
 
-
 function displayForecast(response) {
-  console.log(response.data.daily[0]);
   let forecast = response.data.daily;
   let forecastElement = document.querySelector(".weather-forecast");
 
   let forecastHTML = `<div class ="row">`;
-  
-  let futureData =
-  forecast.forEach(function (forecastDay,index) {
-    if (index < 4) {
-    forecastHTML =
-      forecastHTML +
-      ` <div class="col-2"> 
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        ` <div class="col-2"> 
         	<div class="weather-forecast-date">${formatDay(forecastDay.time)}</div>
 		<img
                   src="${forecastDay.condition.icon_url}"
                   alt="${forecastDay.condition.description}"
-                  class="forecast-icon "/>
+                  class="forecast-icon"/>
               	<div class = "weather-forecast-temperatures">
                 	<span class="max">${Math.round(
                     forecastDay.temperature.maximum
                   )}°</span> <span class=min> ${Math.round(
-        forecastDay.temperature.minimum
-      )}°</span>
+          forecastDay.temperature.minimum
+        )}°</span>
                 </div>          
-	</div>`;}
+	</div>`;
+    }
     // forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
   });
@@ -81,10 +105,20 @@ function currentWeather(response) {
   descriptionElement.innerHTML = response.data.condition.description;
   iconElement.setAttribute("src", response.data.condition.icon_url);
   iconElement.setAttribute("alt", response.data.condition.icon);
+  let appWrapper = document.querySelector(".app-wrapper");
+  if (response.data.temperature.current > 20) {
+    appWrapper.classList.add("warm");
+  } else {
+    appWrapper.classList.add("cold");
+  }
 
   let forecastCity = cityName;
   let forecastUrl = `https://api.shecodes.io/weather/v1/forecast?query=${forecastCity}&key=${apiKey}&units=metric`;
   axios.get(forecastUrl).then(displayForecast);
+
+  let timeKey = "fea2efcd3e02d8f02338366e2c372f87";
+  let currentTime = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${timeKey}`;
+  axios.get(currentTime).then(timeNow);
 }
 let celsiusTemp = null;
 
@@ -93,17 +127,17 @@ let apiKey = "b4b16ao0bed60a37cdt0a5dcdf865c3b";
 let currentUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
 axios.get(currentUrl).then(currentWeather);
 
-function fahrenheitTemp(event) {
-  event.preventDefault();
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-  let fahrenheit = (celsiusTemp * 9) / 5 + 32;
-  let fahrenheitElement = document.querySelector("#current-temp");
-  fahrenheitElement.innerHTML = Math.round(fahrenheit);
-}
+//function fahrenheitTemp(event) {
+//event.preventDefault();
+//celsiusLink.classList.remove("active");
+//fahrenheitLink.classList.add("active");
+//let fahrenheit = (celsiusTemp * 9) / 5 + 32;
+//let fahrenheitElement = document.querySelector("#current-temp");
+//fahrenheitElement.innerHTML = Math.round(fahrenheit);
+//}
 
-let fahrenheitLink = document.querySelector("#imperial");
-fahrenheitLink.addEventListener("click", fahrenheitTemp);
+//let fahrenheitLink = document.querySelector("#imperial");
+//fahrenheitLink.addEventListener("click", fahrenheitTemp);
 
 function celsiusTemperature(event) {
   event.preventDefault();
@@ -113,8 +147,8 @@ function celsiusTemperature(event) {
   celsiusElement.innerHTML = celsiusTemp;
 }
 
-let celsiusLink = document.querySelector("#metric");
-celsiusLink.addEventListener("click", celsiusTemperature);
+//let celsiusLink = document.querySelector("#metric");
+//celsiusLink.addEventListener("click", celsiusTemperature);
 
 function currentLocation(position) {
   let lat = position.coords.latitude;
