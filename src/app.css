@@ -25,27 +25,15 @@ h1 {
 .current-icon {
   width: 70px;
 }
-.current-temp {
-  font-size: 80px;
-  position: relative;
-  font-weight: 500;
-}
-.units {
-  position: relative;
-  right: -90px;
-  top: -100px;
-}
+
 .section3 {
   font-size: 15px;
 }
 .weather-forecast {
   padding: 3px;
-  
+
   transition: all 2ms ease-in;
-  
 }
-.weather-forecast:hover{
-background: #ff9d00;
+.weather-forecast:hover {
+  background: #ff9d00;
 }
-
-
